@@ -19,6 +19,26 @@ def data():
     
     return X_train, y_train, X_test, y_test, rf_model
 
+@pytest.fixture
+def model():
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    if "GITHUB_ACTIONS" in os.environ:
+        model_path = os.path.join("/home/runner/work/nd0821-c3-starter-code/nd0821-c3-starter-code", "..", "model", "random_forest_model.pkl")
+        print("Caminho do modelo:", model_path)
+        model = joblib.load(model_path)
+    else:
+        project_dir = os.path.abspath(os.path.join(script_dir, "..", ".."))
+        model_path = os.path.join(project_dir, "starter", "model", "random_forest_model.pkl")
+        print("Caminho do modelo:", model_path)
+        model = joblib.load(model_path)
+    return model
+
+
+def test_train_model(data,model):
+    """Testing if model was saved and correcly trained"""
+    X_train, y_train, _, _, _ = data
+    assert isinstance(model, RandomForestClassifier)
+
 def test_compute_model_metrics(data):
     """Testing if metrics are floats"""
     _, _, X_test, y_test, rf_model = data
