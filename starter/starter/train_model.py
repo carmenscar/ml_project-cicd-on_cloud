@@ -43,6 +43,8 @@ try:
     print("Processamento de dados de teste concluído.")
 except Exception as e:
     print(f"Ocorreu um erro durante o processamento de dados de teste: {e}")
+
+print(X_train.shape)
 # Train and save a model.
 model = train_model(X_train, y_train)
 preds = inference(model, X_test)

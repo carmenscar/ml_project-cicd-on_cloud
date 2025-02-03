@@ -39,7 +39,7 @@ class InputData(BaseModel):
     native_country: str
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "age": 39,
                 "workclass": "State-gov",
