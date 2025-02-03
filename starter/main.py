@@ -25,7 +25,7 @@ def read_root():
 class InputData(BaseModel):
     age: int
     workclass: str
-    fnlwgt: int
+    fnlgt: int
     education: str
     education_num: int
     marital_status: str
@@ -43,7 +43,7 @@ class InputData(BaseModel):
             "example": {
                 "age": 39,
                 "workclass": "State-gov",
-                "fnlwgt": 77516,
+                "fnlgt": 77516,
                 "education": "Bachelors",
                 "education_num": 13,
                 "marital_status": "Never-married",
@@ -65,13 +65,19 @@ def predict(data: InputData):
     input_data = pd.DataFrame([data.dict()])
     
     cat_features = [
-        "workclass", "education", "marital_status", "occupation", "relationship",
-        "race", "sex", "native_country"
+        "workclass",
+        "education",
+        "marital_status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "native_country",
     ]
     
     from starter.ml.data import process_data
     X, _, _, _ = process_data(input_data, categorical_features=cat_features, training=False, encoder=encoder, lb=lb)
-    
+    print(X.shape)
     prediction = model.predict(X)
     
     return {"prediction": ">=50K" if prediction[0] == 1 else "<50K"}

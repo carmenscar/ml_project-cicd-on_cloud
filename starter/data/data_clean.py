@@ -12,7 +12,6 @@ def import_data_and_clean(csv_path):
     except:
         logging.error("ERROR: dataframe not found")
         return None
-    df.columns = df.columns.str.replace(' ', '')
     logging.info("SUCCESS: dataframe is cleaned")
     return df
 

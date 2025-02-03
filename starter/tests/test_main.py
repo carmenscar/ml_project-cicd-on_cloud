@@ -17,7 +17,7 @@ def test_post_prediction_1():
     response = client.post("/predict/", json={
         "age": 39,
         "workclass": "State-gov",
-        "fnlwgt": 77516,
+        "fnlgt": 77516,
         "education": "Bachelors",
         "education_num": 13,
         "marital_status": "Never-married",
@@ -37,7 +37,7 @@ def test_post_prediction_2():
     response = client.post("/predict/", json={
         "age": 50,
         "workclass": "Private",
-        "fnlwgt": 234721,
+        "fnlgt": 234721,
         "education": "Doctorate",
         "education_num": 16,
         "marital_status": "Married-civ-spouse",
