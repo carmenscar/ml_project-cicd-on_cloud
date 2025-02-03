@@ -6,6 +6,7 @@ from sklearn.datasets import make_classification
 import sys
 import os
 import joblib
+import pickle
 
 from starter.ml.model import train_model, compute_model_metrics, inference
 
@@ -20,11 +21,13 @@ def data():
 
 @pytest.fixture
 def model():
-    base_path = os.path.dirname(__file__)
-    model_path = os.path.join(base_path, '..', 'model')
-    model_file_path = os.path.join(model_path, 'random_forest_model.pkl')
-    model = joblib.load(model_file_path)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(script_dir, "..", "model", "random_forest_model.pkl")
+    model_path = os.path.abspath(model_path)
+    print("Caminho do modelo:", model_path)
+    model = joblib.load(model_path)
     return model
+
 
 def test_train_model(data,model):
     """Testing if model was saved and correcly trained"""
