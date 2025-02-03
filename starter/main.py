@@ -1,16 +1,19 @@
 # Put the code for your API here.
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from fastapi import FastAPI
 from pydantic import BaseModel
 import joblib
 import numpy as np
 import pandas as pd
 
-model = joblib.load("model/random_forest_model.pkl")
-encoder = joblib.load("model/encoder.pkl")
-lb = joblib.load("model/lb.pkl")
+base_path = os.path.dirname(__file__)  # Diretório onde o main.py está
+model_path = os.path.join(base_path, "model")
+
+# Agora você pode carregar os modelos
+model = joblib.load(os.path.join(model_path, "random_forest_model.pkl"))
+encoder = joblib.load(os.path.join(model_path, "encoder.pkl"))
+lb = joblib.load(os.path.join(model_path, "lb.pkl"))
 
 
 app = FastAPI()
