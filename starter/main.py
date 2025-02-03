@@ -7,13 +7,17 @@ import joblib
 import numpy as np
 import pandas as pd
 
-base_path = os.path.dirname(__file__)  # Diretório onde o main.py está
-model_path = os.path.join(base_path, "model")
-
-# Agora você pode carregar os modelos
-model = joblib.load(os.path.join(model_path, "random_forest_model.pkl"))
-encoder = joblib.load(os.path.join(model_path, "encoder.pkl"))
-lb = joblib.load(os.path.join(model_path, "lb.pkl"))
+base_path = os.path.dirname(os.path.abspath(__file__))
+if "GITHUB_ACTIONS" in os.environ:
+    model_path = os.path.join("/home/runner/work/nd0821-c3-starter-code/nd0821-c3-starter-code", "starter", "model")
+    print("Caminho do modelo:", model_path)
+    model = joblib.load(os.path.join(model_path,"random_forest_model.pkl"))
+    encoder = joblib.load(os.path.join(model_path,"encoder.pkl"))
+    lb = joblib.load(os.path.join(model_path, "lb.pkl"))
+else:
+    model = joblib.load(os.path.join(base_path,"model", "random_forest_model.pkl"))
+    encoder = joblib.load(os.path.join(base_path,"model","encoder.pkl"))
+    lb = joblib.load(os.path.join(base_path, "model", "lb.pkl"))
 
 
 app = FastAPI()
