@@ -7,7 +7,9 @@ import sys
 import os
 import joblib
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+base_path = os.path.dirname(__file__)
+model_path = os.path.join(base_path, '..', 'model')
+model_file_path = os.path.join(model_path, 'random_forest_model.pkl')
 
 from starter.ml.model import train_model, compute_model_metrics, inference
 
@@ -23,8 +25,7 @@ def data():
 def test_train_model(data):
     """Testing if model was saved and correcly trained"""
     X_train, y_train, _, _, _ = data
-    model_path = "/home/carmenscar/nd0821-c3-starter-code/starter/model/random_forest_model.pkl"
-    model = joblib.load(model_path)
+    model = joblib.load(model_file_path)
     
     assert isinstance(model, RandomForestClassifier)
 
