@@ -22,8 +22,8 @@ def data():
 @pytest.fixture
 def model():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    model_path = os.path.join(script_dir, "..", "model", "random_forest_model.pkl")
-    model_path = os.path.abspath(model_path)
+    project_dir = os.path.abspath(os.path.join(script_dir, "..", ".."))
+    model_path = os.path.join(project_dir, "starter", "model", "random_forest_model.pkl")
     print("Caminho do modelo:", model_path)
     model = joblib.load(model_path)
     return model
