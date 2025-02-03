@@ -49,7 +49,7 @@ def test_compute_model_metrics(data):
     assert isinstance(fbeta, float)
 
 def test_inference(data):
-    """Testing if inference function return predictions"""
+    """Testing if inference function return predictions!"""
     _, _, X_test, _, model = data
     preds = inference(model, X_test)
     assert isinstance(preds, np.ndarray)
