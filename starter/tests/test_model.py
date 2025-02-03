@@ -23,7 +23,7 @@ def data():
 def model():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     if "GITHUB_ACTIONS" in os.environ:
-        model_path = os.path.join("/home/runner/work/nd0821-c3-starter-code/nd0821-c3-starter-code", "..", "model", "random_forest_model.pkl")
+        model_path = os.path.join("/home/runner/work/nd0821-c3-starter-code/nd0821-c3-starter-code", "starter", "model", "random_forest_model.pkl")
         print("Caminho do modelo:", model_path)
         model = joblib.load(model_path)
     else:
