@@ -61,7 +61,14 @@ print(f"F-beta: {fbeta:.4f}")
 base_path = os.path.dirname(os.path.abspath(__file__))  # Pega 'starter/tests'
 base_path = os.path.dirname(base_path)
 
-joblib.dump(model,os.path.join(base_path,"model", "random_forest_model.pkl"))
-joblib.dump(encoder,os.path.join(base_path,"model","encoder.pkl"))
-joblib.dump(lb,os.path.join(base_path, "model", "lb.pkl"))
 
+if "GITHUB_ACTIONS" in os.environ:
+    model_path = os.path.join("/home/runner/work/nd0821-c3-starter-code/nd0821-c3-starter-code", "starter", "model")
+    print("Caminho do modelo:", model_path)
+    joblib.dump(model,os.path.join(model_path,"random_forest_model.pkl"))
+    joblib.dump(encoder,os.path.join(model_path,"encoder.pkl"))
+    joblib.dump(lb,os.path.join(model_path, "lb.pkl"))
+else:
+    joblib.dump(model,os.path.join(base_path,"model", "random_forest_model.pkl"))
+    joblib.dump(encoder,os.path.join(base_path,"model","encoder.pkl"))
+    joblib.dump(lb,os.path.join(base_path, "model", "lb.pkl"))
