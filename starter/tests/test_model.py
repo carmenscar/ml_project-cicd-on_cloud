@@ -28,7 +28,7 @@ def model():
         print("Caminho do modelo:", model_path)
         model = joblib.load(model_path)
     else:
-        model_path = os.path.join(script_dir, "..", "model", "random_forest_model.pkl")
+        model_path = os.path.join("/home/runner/work/nd0821-c3-starter-code/nd0821-c3-starter-code", "..", "model", "random_forest_model.pkl")
         print("Caminho do modelo:", model_path)
         model = joblib.load(model_path)
     return model
