@@ -5,7 +5,7 @@ logging.basicConfig(filename='logs.log',
                     level=logging.INFO,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-def import_data_and_clean(csv_path):
+def import_data(csv_path):
     try:
         df = pd.read_csv(csv_path)
         logging.info("SUCCESS: dataframe is loaded")
@@ -17,5 +17,5 @@ def import_data_and_clean(csv_path):
 
 
 if __name__ == "__main__":
-    df_raw = import_data_and_clean("/home/carmenscar/nd0821-c3-starter-code/starter/data/census.csv")
+    df_raw = import_data("/workspaces/nd0821-c3-starter-code/starter/data/census.csv")
     print(df_raw.head())

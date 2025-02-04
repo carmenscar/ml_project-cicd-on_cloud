@@ -22,16 +22,10 @@ def data():
 @pytest.fixture
 def model():
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    if "GITHUB_ACTIONS" in os.environ:
-        model_path = os.path.join("/home/runner/work/nd0821-c3-starter-code/nd0821-c3-starter-code", "starter", "model", "random_forest_model.pkl")
-        print("Caminho do modelo:", model_path)
-        model = joblib.load(model_path)
-    else:
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        model_dir = os.path.join(script_dir, '..', 'model')
-        model_path = os.path.join(model_dir, "random_forest_model.pkl")
-        print("Caminho do modelo:", model_path)
-        model = joblib.load(model_path)
+    model_dir = os.path.join(script_dir, '..', 'model')
+    model_path = os.path.join(model_dir, "random_forest_model.pkl")
+    print("Caminho do modelo:", model_path)
+    model = joblib.load(model_path)
     return model
 
 

@@ -5,13 +5,13 @@ import sys
 import os
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from data.data_clean import import_data_and_clean
+from data.data_clean import import_data
 from starter.ml.data import process_data
 from starter.ml.model import train_model, compute_model_metrics, inference
 import joblib
 
 # Add the necessary imports for the starter code.
-data = import_data_and_clean("/home/carmenscar/nd0821-c3-starter-code/starter/data/census.csv")
+data = import_data("/workspaces/nd0821-c3-starter-code/starter/data/census.csv")
 data.columns = data.columns.str.replace(' ', '')
 data.columns = data.columns.str.replace('-', '_')
 print(data.columns)
@@ -58,17 +58,8 @@ print(f"Recall: {recall:.4f}")
 print(f"F-beta: {fbeta:.4f}")
 
 
-base_path = os.path.dirname(os.path.abspath(__file__))  # Pega 'starter/tests'
+base_path = os.path.dirname(os.path.abspath(__file__))  
 base_path = os.path.dirname(base_path)
-
-
-if "GITHUB_ACTIONS" in os.environ:
-    model_path = os.path.join("/home/runner/work/nd0821-c3-starter-code/nd0821-c3-starter-code", "starter", "model")
-    print("Caminho do modelo:", model_path)
-    joblib.dump(model,os.path.join(model_path,"random_forest_model.pkl"))
-    joblib.dump(encoder,os.path.join(model_path,"encoder.pkl"))
-    joblib.dump(lb,os.path.join(model_path, "lb.pkl"))
-else:
-    joblib.dump(model,os.path.join(base_path,"model", "random_forest_model.pkl"))
-    joblib.dump(encoder,os.path.join(base_path,"model","encoder.pkl"))
-    joblib.dump(lb,os.path.join(base_path, "model", "lb.pkl"))
+joblib.dump(model,os.path.join(base_path,"model", "random_forest_model.pkl"))
+joblib.dump(encoder,os.path.join(base_path,"model","encoder.pkl"))
+joblib.dump(lb,os.path.join(base_path, "model", "lb.pkl"))

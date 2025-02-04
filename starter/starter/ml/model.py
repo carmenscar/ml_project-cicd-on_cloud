@@ -22,7 +22,7 @@ def train_model(X_train, y_train):
     """
     model = RandomForestClassifier(n_estimators=100, random_state=42)
     model.fit(X_train, y_train)
-    joblib.dump(model, "/home/carmenscar/nd0821-c3-starter-code/starter/model/random_forest_model.pkl")
+    joblib.dump(model, "/workspaces/nd0821-c3-starter-code/starter/model/random_forest_model.pkl")
     
     return model
 

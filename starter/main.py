@@ -6,19 +6,32 @@ from pydantic import BaseModel
 import joblib
 import numpy as np
 import pandas as pd
+import logging
+from starter.ml.data import process_data
+
+logging.basicConfig(filename='logs.log',
+                    level=logging.INFO,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 base_path = os.path.dirname(os.path.abspath(__file__))
-if "GITHUB_ACTIONS" in os.environ:
-    model_path = os.path.join("/home/runner/work/nd0821-c3-starter-code/nd0821-c3-starter-code", "starter", "model")
-    print("Caminho do modelo:", model_path)
-    model = joblib.load(os.path.join(model_path,"random_forest_model.pkl"))
-    encoder = joblib.load(os.path.join(model_path,"encoder.pkl"))
-    lb = joblib.load(os.path.join(model_path, "lb.pkl"))
-else:
-    model = joblib.load(os.path.join(base_path,"model", "random_forest_model.pkl"))
-    encoder = joblib.load(os.path.join(base_path,"model","encoder.pkl"))
-    lb = joblib.load(os.path.join(base_path, "model", "lb.pkl"))
+#model = joblib.load(os.path.join(base_path,"model", "random_forest_model.pkl"))
+#encoder = joblib.load(os.path.join(base_path,"model","encoder.pkl"))
+#lb = joblib.load(os.path.join(base_path, "model", "lb.pkl"))
 
+if os.path.exists(os.path.join(base_path,"model", "random_forest_model.pkl")):
+    model = joblib.load(os.path.join(base_path,"model", "random_forest_model.pkl"))
+else:
+    logging.error("Erro: Arquivo de model não encontrado!")
+
+if os.path.exists(os.path.join(base_path,"model","encoder.pkl")):
+    encoder = joblib.load(os.path.join(base_path,"model","encoder.pkl"))
+else:
+    logging.error("Erro: Arquivo de encoder não encontrado!")
+
+if os.path.exists(os.path.join(base_path, "model", "lb.pkl")):
+    lb = joblib.load(os.path.join(base_path, "model", "lb.pkl"))
+else:
+    logging.error("Erro: Arquivo de lb não encontrado!")
 
 app = FastAPI()
 
@@ -42,7 +55,7 @@ class InputData(BaseModel):
     hours_per_week: int
     native_country: str
 
-    class Config:
+    class ConfigDict:
         json_schema_extra = {
             "example": {
                 "age": 39,
@@ -66,7 +79,7 @@ class InputData(BaseModel):
 @app.post("/predict/")
 def predict(data: InputData):
 
-    input_data = pd.DataFrame([data.dict()])
+    input_data = pd.DataFrame([data.model_dump()])
     
     cat_features = [
         "workclass",
@@ -78,9 +91,7 @@ def predict(data: InputData):
         "sex",
         "native_country",
     ]
-    
-    from starter.ml.data import process_data
-    X, _, _, _ = process_data(input_data, categorical_features=cat_features, training=False, encoder=encoder, lb=lb)
+    X, _, _, _ = process_data(input_data, categorical_features=cat_features, label=None, training=False, encoder=encoder, lb=lb)
     print(X.shape)
     prediction = model.predict(X)
     
