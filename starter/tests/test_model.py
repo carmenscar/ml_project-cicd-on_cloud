@@ -37,11 +37,12 @@ def model():
     if "GITHUB_WORKSPACE" in os.environ:
         print("Rodando no GitHub Actions")
         base_dir = Path(os.environ["GITHUB_WORKSPACE"])
+        model_path = base_dir / "starter" / "model" / "random_forest_model.pkl"
     else:
         print("Rodando no ambiente local")
         script_dir = Path(__file__).resolve().parent
         base_dir = script_dir.parent
-    model_path = base_dir / "model" / "random_forest_model.pkl"
+        model_path = base_dir / "model" / "random_forest_model.pkl"
     print("Caminho do modelo:", model_path)
 
     if not model_path.exists():
