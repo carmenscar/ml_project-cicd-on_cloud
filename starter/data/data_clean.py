@@ -14,8 +14,3 @@ def import_data(csv_path):
         return None
     logging.info("SUCCESS: dataframe is cleaned")
     return df
-
-
-if __name__ == "__main__":
-    df_raw = import_data("/workspaces/nd0821-c3-starter-code/starter/data/census.csv")
-    print(df_raw.head())

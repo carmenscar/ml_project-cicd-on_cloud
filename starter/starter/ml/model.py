@@ -27,11 +27,7 @@ def train_model(X_train, y_train):
     script_dir = Path(__file__).resolve().parent
     base_dir = script_dir.parent.parent
     model_path = base_dir / "model" / "random_forest_model.pkl"
-    joblib.dump(model, model_path)
-    print(script_dir)
-    print(base_dir)
-    print(model_path)
-    
+    joblib.dump(model, model_path)    
     return model
 
 

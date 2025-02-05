@@ -1,17 +1,21 @@
 # Script to train machine learning model.
-
-from sklearn.model_selection import train_test_split
 import sys
 import os
+from pathlib import Path
+import joblib
+from sklearn.model_selection import train_test_split
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from data.data_clean import import_data
 from starter.ml.data import process_data
 from starter.ml.model import train_model, compute_model_metrics, inference
-import joblib
 
-# Add the necessary imports for the starter code.
-data = import_data("/workspaces/nd0821-c3-starter-code/starter/data/census.csv")
+script_dir = Path(__file__).resolve().parent.parent
+model_path = script_dir / "data" / "census.csv"
+print(script_dir)
+print(model_path)
+
+data = import_data(model_path)
 data.columns = data.columns.str.replace(' ', '')
 data.columns = data.columns.str.replace('-', '_')
 print(data.columns)
@@ -58,8 +62,7 @@ print(f"Recall: {recall:.4f}")
 print(f"F-beta: {fbeta:.4f}")
 
 
-base_path = os.path.dirname(os.path.abspath(__file__))  
-base_path = os.path.dirname(base_path)
+base_path = Path(__file__).resolve().parent.parent
 joblib.dump(model,os.path.join(base_path,"model", "random_forest_model.pkl"))
 joblib.dump(encoder,os.path.join(base_path,"model","encoder.pkl"))
 joblib.dump(lb,os.path.join(base_path, "model", "lb.pkl"))

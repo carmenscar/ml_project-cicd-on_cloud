@@ -20,34 +20,11 @@ def data():
     
     return X_train, y_train, X_test, y_test, rf_model
 
-'''
-@pytest.fixture
-def model():
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    model_dir = os.path.join(script_dir, '..', 'model')
-    model_path = os.path.join(model_dir, "random_forest_model.pkl")
-    print("Caminho do modelo:", model_path)
-    model = joblib.load(model_path)
-    return model
-'''
-
 @pytest.fixture
 def model():
     # Verifica se está rodando no GitHub Actions
-    if "GITHUB_WORKSPACE" in os.environ:
-        print("Rodando no GitHub Actions")
-        base_dir = Path(os.environ["GITHUB_WORKSPACE"])
-        model_path = base_dir / "starter" / "model" / "random_forest_model.pkl"
-    else:
-        print("Rodando no ambiente local")
-        script_dir = Path(__file__).resolve().parent
-        base_dir = script_dir.parent
-        model_path = base_dir / "model" / "random_forest_model.pkl"
-    print("Caminho do modelo:", model_path)
-
-    if not model_path.exists():
-        raise FileNotFoundError(f"Arquivo não encontrado: {model_path}")
-
+    script_dir = Path(__file__).resolve().parent.parent
+    model_path = script_dir / "model" / "random_forest_model.pkl"
     model = joblib.load(model_path)
     return model
 
