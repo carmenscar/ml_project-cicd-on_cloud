@@ -1,5 +1,7 @@
 import numpy as np
 import joblib
+import os
+from pathlib import Path
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 
@@ -22,7 +24,13 @@ def train_model(X_train, y_train):
     """
     model = RandomForestClassifier(n_estimators=100, random_state=42)
     model.fit(X_train, y_train)
-    joblib.dump(model, "/workspaces/nd0821-c3-starter-code/starter/model/random_forest_model.pkl")
+    script_dir = Path(__file__).resolve().parent
+    base_dir = script_dir.parent.parent
+    model_path = base_dir / "model" / "random_forest_model.pkl"
+    joblib.dump(model, model_path)
+    print(script_dir)
+    print(base_dir)
+    print(model_path)
     
     return model
 
