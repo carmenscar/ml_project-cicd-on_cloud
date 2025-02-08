@@ -20,14 +20,10 @@ def test_get_root():
     assert response.status_code == 200
     assert response.json() == {"message": "Bem-vindo à API de inferência do modelo de renda!"}
 
-def test_post_prediction_1():
+def test_post_prediction():
     thread = threading.Thread(target=run_api, daemon=True)
     thread.start()
-
-    # Aguarde a API iniciar
     time.sleep(2)
-
-    # Testa um POST automaticamente
     url = "http://127.0.0.1:8000/predict/"
     payload = {
         "age": 39,
@@ -48,29 +44,6 @@ def test_post_prediction_1():
 
     response = requests.post(url, json=payload)
     expected_values = {"<=50K", ">50K"}
-    #assert response.status_code == 200, f"Status code inesperado: {response.status_code}"
-    #assert response.json()["prediction"] in expected_values, f"Resposta inesperada: {response.json()}"
     data = response.json()
     assert response.status_code == 200  
     assert data["prediction"] in expected_values
-'''
-def test_post_prediction_2():
-    response = client.post("/predict/", json={
-        "age": 50,
-        "workclass": "Private",
-        "fnlgt": 234721,
-        "education": "Doctorate",
-        "education_num": 16,
-        "marital_status": "Married-civ-spouse",
-        "occupation": "Exec-managerial",
-        "relationship": "Husband",
-        "race": "White",
-        "sex": "Male",
-        "capital_gain": 0,
-        "capital_loss": 0,
-        "hours_per_week": 60,
-        "native_country": "United-States"
-    })
-    assert response.status_code == 200
-    assert response.json()["prediction"] in ["<50K", ">=50K"]
-'''
