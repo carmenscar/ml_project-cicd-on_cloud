@@ -20,7 +20,7 @@ def test_get_root():
     assert response.status_code == 200
     assert response.json() == {"message": "Bem-vindo à API de inferência do modelo de renda!"}
 
-def test_post_prediction():
+def test_post_prediction_possibility_x():
     thread = threading.Thread(target=run_api, daemon=True)
     thread.start()
     time.sleep(5)
@@ -39,6 +39,31 @@ def test_post_prediction():
         "capital_gain": 2174,
         "capital_loss": 0,
         "hours_per_week": 40,
+        "native_country": "United-States"
+    }
+
+    response = requests.post(url, json=payload)
+    expected_values = {"<=50K", ">50K"}
+    data = response.json()
+    assert response.status_code == 200  
+    assert data["prediction"] in expected_values
+
+def test_post_prediction_possibility_y():
+    url = "http://127.0.0.1:8000/predict/"
+    payload = {
+        "age": 28,
+        "workclass": "Private",
+        "fnlgt": 123456,
+        "education": "Masters",
+        "education_num": 14,
+        "marital_status": "Married-civ-spouse",
+        "occupation": "Exec-managerial",
+        "relationship": "Husband",
+        "race": "Black",
+        "sex": "Male",
+        "capital_gain": 10000,
+        "capital_loss": 0,
+        "hours_per_week": 50,
         "native_country": "United-States"
     }
 
