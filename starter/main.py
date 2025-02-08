@@ -102,7 +102,6 @@ def predict(data: InputData):
     return {"prediction": str_out}
 
 
-
 if __name__ == "__main__":
     import uvicorn
     import time

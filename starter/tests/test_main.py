@@ -23,7 +23,7 @@ def test_get_root():
 def test_post_prediction():
     thread = threading.Thread(target=run_api, daemon=True)
     thread.start()
-    time.sleep(2)
+    time.sleep(5)
     url = "http://127.0.0.1:8000/predict/"
     payload = {
         "age": 39,
@@ -47,3 +47,13 @@ def test_post_prediction():
     data = response.json()
     assert response.status_code == 200  
     assert data["prediction"] in expected_values
+
+def test_post_prediction_missing_fields():
+    url = "http://127.0.0.1:8000/predict/"
+    payload = { 
+        "age": 39,
+        "workclass": "State-gov"
+    }
+
+    response = requests.post(url, json=payload)
+    assert response.status_code == 422  # Espera erro de validação do FastAPI
