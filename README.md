@@ -6,6 +6,13 @@ This is an API project with CI/CD
 
 You can learn more about it on my [Github repo](https://github.com/carmenscar/nd0821-c3-starter-code).
 
+# Screenshots Project
+CD: starter/screenshots/continuous_deployment.png
+CI: starter/screenshots/continuous_integration.png
+Example: starter/screenshots/example.png
+GET: starter/screenshots/live_get.png
+POST: starter/screenshots/live_post.png
+
 # Environment Set up
 
 - Download and install conda if you don’t have it already.
